@@ -56,3 +56,24 @@ sr.reveal('.home__img, .about__subtitle, .about__text, .skills__img',{delay: 400
 //sr.reveal('.home__social-icon',{ interval: 200}); 
 sr.reveal('.fab.fa-leetcode',{ interval: 200});
 sr.reveal('.skills__data, .work__img, .contact__input',{interval: 200}); 
+
+
+
+// function sendEmail() {
+//     var templateParams = {
+//         to_name: "Recipient Name",  // Replace with the recipient's name
+//         from_name: document.getElementById("name").value,
+//         from_email: document.getElementById("email").value,
+//         message: document.getElementById("message").value,
+//     };
+
+//     emailjs.send("service_your_emailjs_service_id", "template_your_template_id", templateParams)
+//         .then(function (response) {
+//             console.log("Email sent successfully:", response);
+//             // You can add further actions here, like showing a success message to the user
+//         })
+//         .catch(function (error) {
+//             console.log("Email failed to send:", error);
+//             // You can handle errors and show a failure message to the user
+//         });
+// }

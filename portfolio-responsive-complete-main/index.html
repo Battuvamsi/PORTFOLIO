@@ -10,6 +10,41 @@
         <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
 
         <title>Portfolio website complete</title>
+
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+        <script type="text/javascript">
+            (function () {
+                emailjs.init({
+                    publicKey: "b2K3R5DIC-ZKwJaEM",
+                });
+            })();
+    
+            function submitForm() {
+                var name = document.getElementById("name").value;
+                var email = document.getElementById("email").value;
+                var message = document.getElementById("message").value;
+    
+                // You can perform additional validation if needed
+    
+                // Send the data to EmailJS service
+                emailjs.send("service_cz2i1jo", "template_bgzbrof", {
+                    from_name: name,
+                    from_email: email,
+                    message: message
+                }).then(
+                    function (response) {
+                        console.log("Email sent successfully:", response);
+                        // You can add further actions here, like showing a success message to the user
+                        alert("Email sent successfully!");
+                    },
+                    function (error) {
+                        console.log("Email failed to send:", error);
+                        // You can handle errors and show a failure message to the user
+                        alert("Failed to send email. Please try again later.");
+                    }
+                );
+            }
+        </script>
     </head>
     <body>
         <!--===== HEADER =====-->
@@ -175,18 +210,18 @@
             </section>
 
             <!--===== CONTACT =====-->
-            <section class="contact section" id="contact">
-                <h2 class="section-title">Contact</h2>
+        <section class="contact section" id="contact">
+            <h2 class="section-title">Contact</h2>
 
-                <div class="contact__container bd-grid">
-                    <form action="" class="contact__form">
-                        <input type="text" placeholder="Name" class="contact__input">
-                        <input type="mail" placeholder="Email" class="contact__input">
-                        <textarea name="" id="" cols="0" rows="10" class="contact__input"></textarea>
-                        <input type="button" value="Contact" class="contact__button button">
-                    </form>
-                </div>
-            </section>
+            <div class="contact__container bd-grid">
+                <form action="#" class="contact__form" id="contactForm">
+                    <input type="text" placeholder="Name" class="contact__input" id="name">
+                    <input type="email" placeholder="Email" class="contact__input" id="email">
+                    <textarea placeholder="Message" class="contact__input" id="message" cols="30" rows="10"></textarea>
+                    <input type="button" value="Contact" class="contact__button button" onclick="submitForm()">
+                </form>
+            </div>
+        </section>
         </main>
 
         <!--===== FOOTER =====-->
