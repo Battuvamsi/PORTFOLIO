@@ -20,30 +20,50 @@
             })();
     
             function submitForm() {
-                var name = document.getElementById("name").value;
-                var email = document.getElementById("email").value;
-                var message = document.getElementById("message").value;
-    
-                // You can perform additional validation if needed
-    
-                // Send the data to EmailJS service
-                emailjs.send("service_cz2i1jo", "template_bgzbrof", {
-                    from_name: name,
-                    from_email: email,
-                    message: message
-                }).then(
-                    function (response) {
-                        console.log("Email sent successfully:", response);
-                        // You can add further actions here, like showing a success message to the user
-                        alert("Email sent successfully!");
-                    },
-                    function (error) {
-                        console.log("Email failed to send:", error);
-                        // You can handle errors and show a failure message to the user
-                        alert("Failed to send email. Please try again later.");
-                    }
-                );
-            }
+    var name = document.getElementById("name").value;
+    var email = document.getElementById("email").value;
+    var message = document.getElementById("message").value;
+
+    // Validate the email address
+    if (!isValidEmail(email)) {
+        alert("Please enter a valid email address");
+        return false;
+    }
+
+    // Append the email address to the message
+    var fullMessage = `Email: ${email}\n\n${message}`;
+
+    // Send the data to EmailJS service
+    emailjs.send("service_cz2i1jo", "template_bgzbrof", {
+        from_name: name,
+        from_email: email,
+        message: fullMessage
+    }).then(
+        function (response) {
+            console.log("Email sent successfully:", response);
+            // You can add further actions here, like showing a success message to the user
+            alert("Email sent successfully!");
+
+            // Optionally, you can clear the form after successful submission
+            document.getElementById("contactForm").reset();
+        },
+        function (error) {
+            console.log("Email failed to send:", error);
+            // You can handle errors and show a failure message to the user
+            alert("Failed to send email. Error: " + JSON.stringify(error));
+        }
+    );
+
+    return false; // Prevent the form from actually submitting
+}
+
+// Function to validate email address
+function isValidEmail(email) {
+    // You can add a more sophisticated email validation if needed
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
         </script>
     </head>
     <body>
@@ -210,18 +230,20 @@
             </section>
 
             <!--===== CONTACT =====-->
-        <section class="contact section" id="contact">
-            <h2 class="section-title">Contact</h2>
+    <section class="contact section" id="contact">
+        <h2 class="section-title">Contact</h2>
 
-            <div class="contact__container bd-grid">
-                <form action="#" class="contact__form" id="contactForm">
-                    <input type="text" placeholder="Name" class="contact__input" id="name">
-                    <input type="email" placeholder="Email" class="contact__input" id="email">
-                    <textarea placeholder="Message" class="contact__input" id="message" cols="30" rows="10"></textarea>
-                    <input type="button" value="Contact" class="contact__button button" onclick="submitForm()">
-                </form>
-            </div>
-        </section>
+        <div class="contact__container bd-grid">
+            <form action="#" class="contact__form" id="contactForm" onsubmit="return submitForm()">
+                <input type="text" placeholder="Name" class="contact__input" id="name" required>
+                <input type="email" placeholder="Email" class="contact__input" id="email" required>
+                <!-- <p>(PLEASE MENTION CONTACT DETAILS PHONE NUMBER AND MAIL ID IN MESSAGE BOX)</p> -->
+                <textarea placeholder="Message" class="contact__input" id="message" cols="30" rows="10" required></textarea>
+                <input type="submit" value="Contact" class="contact__button button">
+            </form>
+            <p id="formStatus"></p>
+        </div>
+    </section> 
         </main>
 
         <!--===== FOOTER =====-->
